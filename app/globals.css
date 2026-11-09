@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0a3158;
+  --color-navy-deep: #082b4d;
+  --color-ink: #092e52;
+  --color-baby: #ddeffc;
+  --color-powder: #c8e6f4;
+  --color-blush: #f6c5cf;
+  --color-blush-soft: #fbe5ea;
+  --color-rose: #e07a92;
+  --color-rose-dark: #c95f78;
+  --color-warm: #fffcfa;
+  --color-cream: #fbf7f3;
+  --color-muted: #6d7682;
+
+  --font-serif: var(--font-playfair), "Georgia", serif;
+  --font-sans: var(--font-dmsans), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 6px 24px -10px rgb(10 49 88 / 0.18);
+  --shadow-card: 0 10px 30px -14px rgb(10 49 88 / 0.22);
+
+  --animate-fade-up: fade-up 0.6s ease-out both;
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  --animate-hero-zoom: hero-zoom 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes hero-zoom {
+    from {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  --animate-badge-in: badge-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  @keyframes badge-in {
+    from {
+      opacity: 0;
+      transform: scale(0.6) rotate(-12deg);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  --animate-float: float 4s ease-in-out infinite;
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  --animate-pop: pop 0.35s ease-out;
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-warm text-ink font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif text-navy;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-rose);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-10;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility btn-pink {
+  @apply btn bg-rose text-white shadow-soft hover:-translate-y-0.5 hover:bg-rose-dark;
+}
+@utility btn-navy {
+  @apply btn bg-navy text-white hover:-translate-y-0.5 hover:bg-navy-deep;
+}
+@utility btn-outline {
+  @apply btn border-2 border-navy bg-white/70 text-navy hover:bg-navy hover:text-white;
+}
+@utility card {
+  @apply rounded-[22px] border border-navy/5 bg-white shadow-soft;
+}
+@utility section-title {
+  @apply font-serif text-[28px] leading-tight text-navy sm:text-[32px];
+}
+@utility field {
+  @apply w-full rounded-xl border border-navy/15 bg-white px-4 py-3 text-[15px] text-ink placeholder:text-muted/70 focus:border-navy focus:outline-none focus:ring-2 focus:ring-powder;
+}
+@utility label {
+  @apply mb-1.5 block text-sm font-semibold text-ink;
+}
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Scroll reveal (set by components/common/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

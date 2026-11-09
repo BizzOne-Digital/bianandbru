@@ -1,0 +1,23 @@
+import mongoose from "mongoose";
+
+type Cache = { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null };
+const g = globalThis as unknown as { _mongoose?: Cache };
+const cached: Cache = g._mongoose ?? (g._mongoose = { conn: null, promise: null });
+
+/** Reuses a single connection across hot reloads and serverless invocations. */
+export async function connectDB() {
+  if (cached.conn) return cached.conn;
+  const uri = process.env.MONGODB_URI;
+  if (!uri) throw new Error("MONGODB_URI is not configured");
+  if (!cached.promise) {
+    mongoose.set("strictQuery", true);
+    cached.promise = mongoose.connect(uri, { bufferCommands: false, maxPoolSize: 10 });
+  }
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+  return cached.conn;
+}
