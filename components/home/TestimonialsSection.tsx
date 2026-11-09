@@ -39,17 +39,17 @@ export function TestimonialsSection({ heading, items }: { heading: string; items
 
   return (
     <section aria-labelledby="testimonials-title" className="bg-blush-soft/80">
-      <div className="container-x grid items-center gap-6 py-10 lg:grid-cols-[260px_1fr]">
+      <div className="container-x grid grid-cols-1 items-center gap-6 py-10 [&>*]:min-w-0 lg:grid-cols-[260px_1fr]">
         <h2 id="testimonials-title" className="section-title flex items-center gap-3">
           {heading} <HeartLine className="h-7 w-8" />
         </h2>
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           {showArrows && (
             <button type="button" onClick={() => scroll(-1)} aria-label="Testimonios anteriores" className="hidden h-10 w-10 shrink-0 place-items-center rounded-full border border-navy/20 bg-white text-navy hover:bg-navy hover:text-white lg:grid">
               <ArrowLeft className="h-5 w-5" />
             </button>
           )}
-          <ul ref={ref} className="no-scrollbar flex flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-1">
+          <ul ref={ref} className="no-scrollbar flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-1">
             {items.map((t) => (
               <li key={t._id} className="w-[88%] shrink-0 snap-start sm:w-[48%] lg:w-[calc((100%-2rem)/3)]">
                 <TestimonialCard t={t} />

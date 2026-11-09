@@ -72,13 +72,13 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       )}
 
       {(hasCols || hasFeat || hasOffers) && (
-        <div className="container-x grid gap-8 pb-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_250px] xl:gap-6">
+        <div className="container-x grid grid-cols-1 gap-8 pb-12 [&>*]:min-w-0 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_250px] xl:gap-6">
           {hasCols && (
             <Reveal className="h-full">
               <CollectionsSection heading={colSec.data.heading} collections={featuredCollections} />
             </Reveal>
           )}
-          <div className={`grid gap-8 md:grid-cols-[1fr_260px] xl:contents`}>
+          <div className="grid min-w-0 grid-cols-1 gap-8 [&>*]:min-w-0 md:grid-cols-[1fr_260px] xl:contents">
             {hasFeat && (
               <Reveal delay={120} className="h-full">
                 <FeaturedProducts heading={featSec.data.heading} viewAllLabel={featSec.data.viewAllLabel} products={products} />

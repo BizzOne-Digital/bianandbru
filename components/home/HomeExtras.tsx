@@ -154,7 +154,7 @@ export function GallerySection({ d, instagram }: { d: { heading: string; text: s
         {d.images.slice(0, 5).map((img, i) => (
           <li
             key={i}
-            className={`group relative overflow-hidden rounded-[20px] ${i === 0 ? "col-span-2 row-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}
+            className={`group relative overflow-hidden rounded-[20px] ${i === 0 ? "col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto" : "aspect-square"}`}
           >
             <Image src={getSafeImageUrl(img.src)} alt={img.alt || ""} fill sizes={i === 0 ? "(max-width:768px) 100vw, 50vw" : "(max-width:768px) 50vw, 25vw"} className="object-cover transition duration-700 group-hover:scale-[1.05]" />
             <span className="absolute inset-0 bg-navy/0 transition group-hover:bg-navy/15" aria-hidden />

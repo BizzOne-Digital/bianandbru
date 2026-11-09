@@ -18,7 +18,7 @@ export function FeaturedProducts({ heading, viewAllLabel, products }: { heading:
       {products.length === 0 ? (
         <p className="mt-5 rounded-[20px] bg-white p-8 text-center text-muted shadow-soft">New products are coming soon.</p>
       ) : (
-        <ul className="no-scrollbar -mx-4 mt-5 flex flex-1 snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0">
+        <ul className="no-scrollbar mt-5 flex w-full flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible">
           {products.map((p) => (
             <li key={p._id} className="w-[72%] shrink-0 snap-start sm:h-full sm:w-auto">
               <ProductCard product={p} imageClassName="h-48" />

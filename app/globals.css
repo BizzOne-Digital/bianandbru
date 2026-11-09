@@ -81,8 +81,16 @@
   html {
     scroll-behavior: smooth;
   }
+  html,
+  body {
+    overflow-x: clip;
+  }
   body {
     @apply bg-warm text-ink font-sans antialiased;
+  }
+  /* Grid/flex children may shrink below their content (prevents mobile overflow). */
+  .grid > * {
+    min-width: 0;
   }
   h1,
   h2,
