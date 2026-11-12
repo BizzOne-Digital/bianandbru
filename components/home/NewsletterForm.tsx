@@ -1,11 +1,14 @@
 "use client";
 
+import { useLang } from "@/components/common/LangProvider";
+
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export function NewsletterForm({ buttonLabel = "Subscribe" }: { buttonLabel?: string }) {
   const [email, setEmail] = useState("");
+  const { t } = useLang();
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
@@ -18,11 +21,11 @@ export function NewsletterForm({ buttonLabel = "Subscribe" }: { buttonLabel?: st
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not subscribe");
-      toast.success("Thank you for subscribing!");
+      if (!res.ok) throw new Error(data.error || t("newsletter.error"));
+      toast.success(t("newsletter.thanks"));
       setEmail("");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not subscribe");
+      toast.error(err instanceof Error ? err.message : t("newsletter.error"));
     } finally {
       setLoading(false);
     }
@@ -39,7 +42,7 @@ export function NewsletterForm({ buttonLabel = "Subscribe" }: { buttonLabel?: st
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Your email address"
+        placeholder={t("newsletter.placeholder")}
         className="min-w-0 flex-1 rounded-lg border border-white/20 bg-white px-4 py-3 text-sm text-ink placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blush"
       />
       <button type="submit" disabled={loading} className="btn-pink rounded-lg px-5 py-3 text-sm">

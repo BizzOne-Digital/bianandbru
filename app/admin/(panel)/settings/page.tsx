@@ -8,7 +8,7 @@ export default function SettingsAdmin() {
   return (
     <>
       <PageHeader title="Site Settings" description="Business details, contact info, header/footer text, social links, logo and default SEO." />
-      <SectionEditor sectionKey="settings" title="Settings" fields={SETTINGS_FIELDS} previewPath="/" showPublish={false} folder="misc" />
+      <SectionEditor sectionKey="settings" title="Settings" fields={SETTINGS_FIELDS} previewPath="/" showPublish={false} folder="misc" translatable={false} />
     </>
   );
 }

@@ -25,6 +25,11 @@ const S = new Schema(
     thumbnail: { type: String, default: "" },
     seoTitle: { type: String, default: "" },
     seoDescription: { type: String, default: "" },
+    nameEs: { type: String, default: "" },
+    shortDescriptionEs: { type: String, default: "" },
+    descriptionEs: { type: String, default: "" },
+    seoTitleEs: { type: String, default: "" },
+    seoDescriptionEs: { type: String, default: "" },
   },
   { timestamps: true }
 );

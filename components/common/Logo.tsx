@@ -39,7 +39,7 @@ export function Logo({
 }) {
   const custom = logoUrl ? getSafeImageUrl(logoUrl, "") : "";
   return (
-    <Link href="/" aria-label={`${name} — inicio`} className={cn("flex shrink-0 items-center gap-2.5", className)}>
+    <Link href="/" aria-label={`${name} — home`} className={cn("flex shrink-0 items-center gap-2.5", className)}>
       {custom ? (
         <Image src={custom} alt={name} width={220} height={64} className="h-12 w-auto object-contain sm:h-14" priority />
       ) : (

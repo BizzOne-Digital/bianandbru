@@ -5,6 +5,8 @@ const S = new Schema(
     name: { type: String, required: true },
     role: { type: String, default: "" },
     bio: { type: String, default: "" },
+    roleEs: { type: String, default: "" },
+    bioEs: { type: String, default: "" },
     photo: { type: String, default: "" },
     displayOrder: { type: Number, default: 0 },
     published: { type: Boolean, default: true },

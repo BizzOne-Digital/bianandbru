@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
@@ -8,6 +9,7 @@ import { getFaqs, getSection } from "@/lib/data";
 export const metadata: Metadata = { title: "FAQ", description: "Frequently asked questions about BIAN&BRU orders, products and shipping.", alternates: { canonical: "/faq" } };
 
 export default async function FaqPage() {
+  const t = await getT();
   const [{ data }, faqs] = await Promise.all([getSection<{ faqHeading: string; faqIntro: string }>("pages.misc"), getFaqs()]);
   const groups = faqs.reduce<Record<string, typeof faqs>>((acc, f) => {
     (acc[f.category || "General"] ||= []).push(f);
@@ -25,7 +27,7 @@ export default async function FaqPage() {
       <PageHero title={data.faqHeading} text={data.faqIntro} />
       <section className="container-x max-w-4xl py-14">
         {faqs.length === 0 ? (
-          <EmptyState title="No questions yet" text="Have a question? We are happy to help." actionLabel="Contact us" actionHref="/booking" />
+          <EmptyState title={t("faq.emptyTitle")} text={t("faq.emptyText")} actionLabel={t("faq.contact")} actionHref="/booking" />
         ) : (
           <div className="space-y-10">
             {Object.entries(groups).map(([cat, items]) => (
@@ -47,9 +49,9 @@ export default async function FaqPage() {
           </div>
         )}
         <p className="mt-12 text-center text-ink/75">
-          Still have questions?{" "}
+          {t("faq.still")}{" "}
           <Link href="/booking" className="font-semibold text-navy underline underline-offset-4 hover:text-rose-dark">
-            Send us a message
+            {t("faq.message")}
           </Link>
         </p>
       </section>

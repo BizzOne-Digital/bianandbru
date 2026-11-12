@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import type { FieldDef } from "@/lib/content-defaults";
+import { translatableFields, type FieldDef } from "@/lib/content-defaults";
+import { cn } from "@/lib/utils";
 import type { UploadFolder } from "./AdminImageField";
 import { FieldRenderer, type AdminField } from "./FieldRenderer";
 import { api, Button, Card, Switch, TableSkeleton } from "./ui";
@@ -15,6 +16,7 @@ export function SectionEditor({
   previewPath,
   showPublish = true,
   folder = "pages",
+  translatable = true,
 }: {
   sectionKey: string;
   title: string;
@@ -22,7 +24,12 @@ export function SectionEditor({
   previewPath?: string;
   showPublish?: boolean;
   folder?: UploadFolder;
+  /** Shows English / Español tabs (Spanish edits only text fields). */
+  translatable?: boolean;
 }) {
+  const [lang, setLang] = useState<"en" | "es">("en");
+  const apiKey = lang === "es" ? `${sectionKey}.es` : sectionKey;
+  const shownFields = lang === "es" ? translatableFields(fields) : fields;
   const [data, setData] = useState<Record<string, unknown> | null>(null);
   const [published, setPublished] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -31,13 +38,13 @@ export function SectionEditor({
   useEffect(() => {
     setData(null);
     setDirty(false);
-    api<{ data: Record<string, unknown>; published: boolean }>(`/api/admin/content/${sectionKey}`)
+    api<{ data: Record<string, unknown>; published: boolean }>(`/api/admin/content/${apiKey}`)
       .then((d) => {
         setData(d.data);
         setPublished(d.published);
       })
       .catch((e) => toast.error(e instanceof Error ? e.message : "Could not load"));
-  }, [sectionKey]);
+  }, [apiKey]);
 
   useEffect(() => {
     if (!dirty) return;
@@ -49,7 +56,7 @@ export function SectionEditor({
   async function save() {
     setSaving(true);
     try {
-      await api(`/api/admin/content/${sectionKey}`, { method: "PUT", body: JSON.stringify({ data, published }) });
+      await api(`/api/admin/content/${apiKey}`, { method: "PUT", body: JSON.stringify({ data, published }) });
       toast.success("Changes saved successfully.");
       setDirty(false);
     } catch (e) {
@@ -62,9 +69,32 @@ export function SectionEditor({
   return (
     <Card>
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
-        <h2 className="font-sans text-lg font-semibold text-slate-900">{title}</h2>
         <div className="flex flex-wrap items-center gap-3">
-          {showPublish && (
+          <h2 className="font-sans text-lg font-semibold text-slate-900">{title}</h2>
+          {translatable && (
+            <div role="tablist" aria-label="Language" className="inline-flex rounded-lg bg-slate-100 p-0.5 text-sm font-semibold">
+              {(["en", "es"] as const).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  role="tab"
+                  aria-selected={lang === l}
+                  disabled={saving}
+                  onClick={() => {
+                    if (l === lang) return;
+                    if (dirty && !window.confirm("You have unsaved changes. Switch language anyway?")) return;
+                    setLang(l);
+                  }}
+                  className={cn("rounded-md px-3 py-1.5", lang === l ? "bg-white text-navy shadow-sm" : "text-slate-600 hover:text-slate-900")}
+                >
+                  {l === "en" ? "English" : "Español"}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          {showPublish && lang === "en" && (
             <span className="flex items-center gap-2 text-sm font-medium text-slate-700">
               <Switch
                 checked={published}
@@ -92,7 +122,7 @@ export function SectionEditor({
           <TableSkeleton rows={4} />
         ) : (
           <FieldRenderer
-            fields={fields as AdminField[]}
+            fields={shownFields as AdminField[]}
             values={data}
             folder={folder}
             idPrefix={sectionKey.replace(/\W/g, "-")}
@@ -101,6 +131,11 @@ export function SectionEditor({
               setDirty(true);
             }}
           />
+        )}
+        {lang === "es" && (
+          <p className="mt-4 rounded-lg bg-sky-50 p-3 text-sm text-sky-900">
+            Spanish version: only text is translated here. Images, links and the Published switch are shared with the English version. Empty fields fall back to English.
+          </p>
         )}
         {dirty && <p className="mt-4 text-sm font-medium text-amber-700">You have unsaved changes. Preview shows the last saved version.</p>}
       </div>

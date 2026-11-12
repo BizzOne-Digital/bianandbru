@@ -45,7 +45,7 @@ export function TestimonialsSection({ heading, items }: { heading: string; items
         </h2>
         <div className="flex min-w-0 items-center gap-3">
           {showArrows && (
-            <button type="button" onClick={() => scroll(-1)} aria-label="Testimonios anteriores" className="hidden h-10 w-10 shrink-0 place-items-center rounded-full border border-navy/20 bg-white text-navy hover:bg-navy hover:text-white lg:grid">
+            <button type="button" onClick={() => scroll(-1)} aria-label="Previous testimonials" className="hidden h-10 w-10 shrink-0 place-items-center rounded-full border border-navy/20 bg-white text-navy hover:bg-navy hover:text-white lg:grid">
               <ArrowLeft className="h-5 w-5" />
             </button>
           )}
@@ -57,7 +57,7 @@ export function TestimonialsSection({ heading, items }: { heading: string; items
             ))}
           </ul>
           {showArrows && (
-            <button type="button" onClick={() => scroll(1)} aria-label="Siguientes testimonios" className="hidden h-10 w-10 shrink-0 place-items-center rounded-full border border-navy/20 bg-white text-navy hover:bg-navy hover:text-white lg:grid">
+            <button type="button" onClick={() => scroll(1)} aria-label="Next testimonials" className="hidden h-10 w-10 shrink-0 place-items-center rounded-full border border-navy/20 bg-white text-navy hover:bg-navy hover:text-white lg:grid">
               <ArrowRight className="h-5 w-5" />
             </button>
           )}

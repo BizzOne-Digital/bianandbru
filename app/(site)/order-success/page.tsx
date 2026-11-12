@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ClipboardCheck } from "lucide-react";
@@ -19,24 +20,25 @@ async function findOrder(num?: string) {
 }
 
 export default async function OrderSuccessPage({ searchParams }: { searchParams: Promise<{ order?: string }> }) {
+  const t = await getT();
   const { order: num } = await searchParams;
   const order = await findOrder(num);
   if (!order)
     return (
       <div className="container-x py-16">
-        <EmptyState title="Order not found" text="We could not find that order reference." actionLabel="Back to shop" actionHref="/shop" />
+        <EmptyState title={t("order.notFound")} text={t("order.notFoundText")} actionLabel={t("order.back")} actionHref="/shop" />
       </div>
     );
 
   return (
     <div className="container-x max-w-2xl py-16 text-center">
       <ClipboardCheck aria-hidden className="mx-auto h-16 w-16 text-navy" strokeWidth={1.4} />
-      <h1 className="mt-4 font-serif text-4xl">Order request received</h1>
+      <h1 className="mt-4 font-serif text-4xl">{t("order.title")}</h1>
       <p className="mt-3 text-lg text-ink/80">
-        Thank you! Your reference is <strong className="text-navy">{order.orderNumber}</strong>.
+        {t("order.thanks")} <strong className="text-navy">{order.orderNumber}</strong>.
       </p>
       <p className="mt-2 text-ink/75">
-        Payment has <strong>not</strong> been collected. Our team will contact you to confirm availability, shipping and payment details.
+        {t("order.notPaid")}
       </p>
       <div className="mt-8 rounded-[22px] bg-white p-6 text-left shadow-soft">
         <ul className="space-y-2">
@@ -49,12 +51,12 @@ export default async function OrderSuccessPage({ searchParams }: { searchParams:
           ))}
         </ul>
         <p className="mt-4 flex justify-between border-t border-navy/10 pt-3 font-bold text-navy">
-          <span>Total (before shipping)</span>
+          <span>{t("order.total")}</span>
           <span>{formatPrice(order.total || 0, order.currency || "USD")}</span>
         </p>
       </div>
       <Link href="/shop" className="btn-navy mt-8">
-        Continue Shopping
+        {t("order.continue")}
       </Link>
     </div>
   );

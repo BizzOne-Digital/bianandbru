@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -13,7 +14,7 @@ type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const p = await getProductBySlug((await params).slug);
-  if (!p) return { title: "Product not found" };
+  if (!p) return { title: (await getT())("product.notFound") };
   const img = getSafeImageUrl(p.thumbnail || p.images[0], "");
   return {
     title: p.seoTitle || p.name,
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 export default async function ProductPage({ params }: { params: Params }) {
+  const t = await getT();
   const { slug } = await params;
   const p = await getProductBySlug(slug);
   if (!p) notFound();
@@ -59,11 +61,11 @@ export default async function ProductPage({ params }: { params: Params }) {
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted">
           <ol className="flex flex-wrap items-center gap-1">
             <li>
-              <Link href="/" className="hover:text-navy">Home</Link>
+              <Link href="/" className="hover:text-navy">{t("nav.home")}</Link>
             </li>
             <ChevronRight aria-hidden className="h-4 w-4" />
             <li>
-              <Link href="/shop" className="hover:text-navy">Shop</Link>
+              <Link href="/shop" className="hover:text-navy">{t("nav.shop")}</Link>
             </li>
             {p.collectionRef && (
               <>
@@ -94,13 +96,13 @@ export default async function ProductPage({ params }: { params: Params }) {
               {off > 0 && p.compareAtPrice && (
                 <>
                   <s className="text-lg text-muted">{formatPrice(p.compareAtPrice, p.currency)}</s>
-                  <span className="rounded-full bg-blush-soft px-3 py-1 text-sm font-bold text-rose-dark">Save {off}%</span>
+                  <span className="rounded-full bg-blush-soft px-3 py-1 text-sm font-bold text-rose-dark">{t("product.save", { n: off })}</span>
                 </>
               )}
             </div>
 
             <p className={`mt-3 text-sm font-semibold ${available ? "text-emerald-700" : "text-red-600"}`}>
-              {!p.trackInventory ? "In stock" : p.stock > 10 ? "In stock" : p.stock > 0 ? `Only ${p.stock} left` : "Out of stock"}
+              {!p.trackInventory || p.stock > 10 ? t("product.inStock") : p.stock > 0 ? t("product.onlyLeft", { n: p.stock }) : t("product.outOfStock")}
               {p.sku && <span className="ml-3 font-normal text-muted">SKU: {p.sku}</span>}
             </p>
 
@@ -124,16 +126,16 @@ export default async function ProductPage({ params }: { params: Params }) {
                 <Truck aria-hidden className="h-5 w-5 text-navy" /> {settings.shippingMessage}
               </li>
               <li className="flex items-center gap-2 rounded-2xl bg-blush-soft/70 p-3">
-                <PackageCheck aria-hidden className="h-5 w-5 text-navy" /> Gift-ready
+                <PackageCheck aria-hidden className="h-5 w-5 text-navy" /> {t("product.giftReady")}
               </li>
               <li className="flex items-center gap-2 rounded-2xl bg-baby/50 p-3">
-                <ShieldCheck aria-hidden className="h-5 w-5 text-navy" /> Secure shopping
+                <ShieldCheck aria-hidden className="h-5 w-5 text-navy" /> {t("product.secure")}
               </li>
             </ul>
 
             {p.description && (
               <section className="mt-8">
-                <h2 className="font-serif text-2xl">Description</h2>
+                <h2 className="font-serif text-2xl">{t("product.description")}</h2>
                 <div className="mt-3 whitespace-pre-line leading-relaxed text-ink/85">{p.description}</div>
               </section>
             )}
@@ -142,7 +144,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
         {related.length > 0 && (
           <section className="mt-16">
-            <SectionHeading title="You may also love" />
+            <SectionHeading title={t("product.related")} />
             <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
               {related.map((r) => (
                 <li key={r._id}>

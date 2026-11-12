@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Mail, Phone } from "lucide-react";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BookingPage() {
+  const t = await getT();
   const [{ data }, s] = await Promise.all([
     getSection<{ bookingHeading: string; bookingIntro: string; bookingImage: string }>("pages.misc"),
     getSettings(),
@@ -29,7 +31,7 @@ export default async function BookingPage() {
             <Image src={getSafeImageUrl(data.bookingImage)} alt="" fill sizes="(max-width:1024px) 100vw, 35vw" className="object-cover" />
           </div>
           <div className="rounded-[22px] bg-blush-soft/70 p-6">
-            <h2 className="font-serif text-2xl">Contact us directly</h2>
+            <h2 className="font-serif text-2xl">{t("booking.contactDirect")}</h2>
             <ul className="mt-4 space-y-3 text-ink/85">
               <li>
                 <a href={`mailto:${s.email}`} className="flex items-center gap-3 hover:text-rose-dark">

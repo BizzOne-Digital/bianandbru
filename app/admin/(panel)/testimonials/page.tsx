@@ -15,6 +15,8 @@ export default function TestimonialsAdmin() {
         { name: "rating", label: "Rating", type: "rating" },
         { name: "displayOrder", label: "Display order", type: "number" },
         { name: "review", label: "Review", type: "textarea", required: true },
+        { name: "reviewEs", label: "Review — Spanish (optional)", type: "textarea" },
+        { name: "locationEs", label: "City / location — Spanish (optional)", type: "text" },
         { name: "photo", label: "Customer photo", type: "image" },
         { name: "published", label: "Published", type: "boolean" },
         { name: "featured", label: "Featured", type: "boolean" },

@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -5,7 +6,7 @@ import { SectionHeading } from "@/components/common/PageHero";
 import type { TaxonomyDTO } from "@/lib/data";
 import { getSafeImageUrl } from "@/lib/utils";
 
-export function CollectionCard({ c, i }: { c: TaxonomyDTO; i: number }) {
+export function CollectionCard({ c, i, label }: { c: TaxonomyDTO; i: number; label: string }) {
   const pink = i % 2 === 0;
   return (
     <article className={`group flex h-full flex-col overflow-hidden rounded-[22px] border border-navy/5 shadow-soft ${pink ? "bg-blush-soft/70" : "bg-baby/70"}`}>
@@ -19,14 +20,15 @@ export function CollectionCard({ c, i }: { c: TaxonomyDTO; i: number }) {
           href={`/shop?collection=${c.slug}`}
           className={`btn mt-3 px-5 py-2 text-[13px] text-white ${pink ? "bg-rose hover:bg-rose-dark" : "bg-[#8fb9d6] hover:bg-navy"}`}
         >
-          Shop Collection <ArrowRight aria-hidden className="h-3.5 w-3.5" />
+          {label} <ArrowRight aria-hidden className="h-3.5 w-3.5" />
         </Link>
       </div>
     </article>
   );
 }
 
-export function CollectionsSection({ heading, collections }: { heading: string; collections: TaxonomyDTO[] }) {
+export async function CollectionsSection({ heading, collections }: { heading: string; collections: TaxonomyDTO[] }) {
+  const t = await getT();
   if (!collections.length) return null;
   return (
     <section id="collections" aria-labelledby="collections-title" className="flex h-full scroll-mt-28 flex-col">
@@ -36,7 +38,7 @@ export function CollectionsSection({ heading, collections }: { heading: string; 
       <ul className="mt-5 grid flex-1 gap-4 sm:grid-cols-2">
         {collections.map((c, i) => (
           <li key={c._id} className="h-full">
-            <CollectionCard c={c} i={i} />
+            <CollectionCard c={c} i={i} label={t("home.shopCollection")} />
           </li>
         ))}
       </ul>

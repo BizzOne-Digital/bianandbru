@@ -1,5 +1,7 @@
 "use client";
 
+import { useLang } from "@/components/common/LangProvider";
+
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -35,6 +37,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
   const [bump, setBump] = useState(0);
+  const { t } = useLang();
 
   useEffect(() => {
     try {
@@ -63,8 +66,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...prev, { ...item, quantity: cap(qty, item.stock) }];
     });
     setBump((b) => b + 1);
-    toast.success(`${item.name} added to cart`);
-  }, []);
+    toast.success(t("product.added", { name: item.name }));
+  }, [t]);
 
   const setQty = useCallback((productId: string, qty: number) => {
     setItems((prev) => prev.map((i) => (i.productId === productId ? { ...i, quantity: cap(qty, i.stock) } : i)));
@@ -93,6 +96,7 @@ export function useCart() {
 const WISH_KEY = "bb_wishlist_v1";
 export function useWishlist(productId: string) {
   const [on, setOn] = useState(false);
+  const { t } = useLang();
   useEffect(() => {
     try {
       setOn((JSON.parse(localStorage.getItem(WISH_KEY) || "[]") as string[]).includes(productId));
@@ -105,7 +109,7 @@ export function useWishlist(productId: string) {
       else list.add(productId);
       localStorage.setItem(WISH_KEY, JSON.stringify([...list]));
       setOn(list.has(productId));
-      toast(list.has(productId) ? "Saved to your wishlist" : "Removed from wishlist");
+      toast(list.has(productId) ? t("product.wishAdd") : t("product.wishRemove"));
     } catch {}
   };
   return { on, toggle };

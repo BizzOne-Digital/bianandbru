@@ -15,6 +15,10 @@ export default function OffersAdmin() {
         { name: "description", label: "Description", type: "textarea" },
         { name: "ctaLabel", label: "Button label", type: "text" },
         { name: "ctaHref", label: "Button link", type: "text", help: "Internal path, e.g. /shop?sort=discounted" },
+        { name: "titleEs", label: "Title — Spanish (optional)", type: "text" },
+        { name: "discountLabelEs", label: "Discount label — Spanish (optional)", type: "text" },
+        { name: "descriptionEs", label: "Description — Spanish (optional)", type: "textarea" },
+        { name: "ctaLabelEs", label: "Button label — Spanish (optional)", type: "text" },
         { name: "image", label: "Banner image", type: "image" },
         { name: "displayOrder", label: "Display order", type: "number" },
         { name: "published", label: "Published", type: "boolean" },
@@ -26,7 +30,7 @@ export default function OffersAdmin() {
         { key: "published", label: "Published", kind: "published" },
       ]}
       folder="pages"
-      defaults={{ published: true, ctaLabel: "Ver Ofertas", ctaHref: "/shop?sort=discounted" }}
+      defaults={{ published: true, ctaLabel: "View Offers", ctaHref: "/shop?sort=discounted" }}
     />
   );
 }

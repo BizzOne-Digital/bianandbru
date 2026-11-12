@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import { getSafeImageUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Services",
-  description: "Ventas de productos y accesorios para bebés: keepsakes, baby essentials and gift-ready products.",
+  description: "Baby products and accessories: keepsakes, baby essentials and gift-ready products.",
   alternates: { canonical: "/services" },
 };
 
@@ -22,6 +23,7 @@ type Services = {
 };
 
 export default async function ServicesPage() {
+  const t = await getT();
   const { data: d } = await getSection<Services>("services");
   return (
     <>
@@ -42,7 +44,7 @@ export default async function ServicesPage() {
                 <p className="mt-3 flex-1 leading-relaxed text-ink/80">{it.text}</p>
                 {it.href && (
                   <Link href={it.href} className="mt-4 inline-flex items-center gap-2 self-start font-semibold text-navy hover:text-rose-dark">
-                    Explore <ArrowRight aria-hidden className="h-4 w-4" />
+                    {t("services.explore")} <ArrowRight aria-hidden className="h-4 w-4" />
                   </Link>
                 )}
               </div>
@@ -50,13 +52,13 @@ export default async function ServicesPage() {
           ))}
         </ul>
         <div className="mt-12 flex flex-col items-center gap-4 rounded-[24px] bg-navy px-6 py-10 text-center">
-          <h2 className="font-serif text-3xl text-white">Need help choosing the perfect gift?</h2>
+          <h2 className="font-serif text-3xl text-white">{t("services.ctaTitle")}</h2>
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/shop" className="btn-pink">
-              Shop Now
+              {t("cart.shopNow")}
             </Link>
             <Link href="/booking" className="btn border-2 border-white text-white hover:bg-white hover:text-navy">
-              Book a Consultation
+              {t("services.book")}
             </Link>
           </div>
         </div>

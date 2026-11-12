@@ -12,6 +12,8 @@ export default function TeamAdmin() {
         { name: "name", label: "Name", type: "text", required: true },
         { name: "role", label: "Role", type: "text" },
         { name: "bio", label: "Bio", type: "textarea" },
+        { name: "roleEs", label: "Role — Spanish (optional)", type: "text" },
+        { name: "bioEs", label: "Bio — Spanish (optional)", type: "textarea" },
         { name: "photo", label: "Photo", type: "image" },
         { name: "displayOrder", label: "Display order", type: "number" },
         { name: "published", label: "Published", type: "boolean" },

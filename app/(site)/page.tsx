@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import { HeroSection, type HeroData } from "@/components/home/HeroSection";
 import { TrustStrip } from "@/components/home/TrustStrip";
@@ -16,6 +17,7 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<Record<string, string>> }) {
+  const t = await getT();
   const preview = await isPreview(await searchParams);
   const [hero, trust, story, colSec, featSec, offers, testSec, settings] = await Promise.all([
     getSection<HeroData>("home.hero"),
@@ -62,7 +64,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
-      {preview && <p className="bg-amber-100 py-2 text-center text-sm font-semibold text-amber-900">Preview mode — unpublished sections are visible</p>}
+      {preview && <p className="bg-amber-100 py-2 text-center text-sm font-semibold text-amber-900">{t("home.preview")}</p>}
       {show(hero) && <HeroSection d={hero.data} />}
       {show(trust) && <TrustStrip items={trust.data.items} />}
       {show(story) && (

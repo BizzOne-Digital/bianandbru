@@ -34,6 +34,11 @@ export type ProductFormValues = {
   thumbnail: string;
   seoTitle: string;
   seoDescription: string;
+  nameEs: string;
+  shortDescriptionEs: string;
+  descriptionEs: string;
+  seoTitleEs: string;
+  seoDescriptionEs: string;
 };
 
 export const EMPTY_PRODUCT: ProductFormValues = {
@@ -59,6 +64,11 @@ export const EMPTY_PRODUCT: ProductFormValues = {
   thumbnail: "",
   seoTitle: "",
   seoDescription: "",
+  nameEs: "",
+  shortDescriptionEs: "",
+  descriptionEs: "",
+  seoTitleEs: "",
+  seoDescriptionEs: "",
 };
 
 type Opt = { _id: string; name: string };
@@ -342,6 +352,35 @@ export function ProductForm({ initial }: { initial: ProductFormValues }) {
               <option value="draft">Draft</option>
               <option value="archived">Archived</option>
             </select>
+          </div>
+        </Card>
+
+        <Card className="space-y-4 p-5">
+          <div>
+            <h2 className="font-sans text-base font-semibold">Spanish translation (optional)</h2>
+            <p className="mt-1 text-sm text-slate-500">Shown when visitors switch the site to Español. Empty fields fall back to English.</p>
+          </div>
+          <div>
+            <L htmlFor="p-name-es">Name — Spanish</L>
+            <input id="p-name-es" className={inputCls} value={v.nameEs} onChange={(e) => set("nameEs", e.target.value)} placeholder={v.name} />
+          </div>
+          <div>
+            <L htmlFor="p-short-es">Short description — Spanish</L>
+            <textarea id="p-short-es" rows={2} className={inputCls} value={v.shortDescriptionEs} onChange={(e) => set("shortDescriptionEs", e.target.value)} />
+          </div>
+          <div>
+            <L htmlFor="p-desc-es">Description — Spanish</L>
+            <textarea id="p-desc-es" rows={5} className={inputCls} value={v.descriptionEs} onChange={(e) => set("descriptionEs", e.target.value)} />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <L htmlFor="p-seot-es">SEO title — Spanish</L>
+              <input id="p-seot-es" className={inputCls} maxLength={160} value={v.seoTitleEs} onChange={(e) => set("seoTitleEs", e.target.value)} />
+            </div>
+            <div>
+              <L htmlFor="p-seod-es">SEO description — Spanish</L>
+              <input id="p-seod-es" className={inputCls} maxLength={320} value={v.seoDescriptionEs} onChange={(e) => set("seoDescriptionEs", e.target.value)} />
+            </div>
           </div>
         </Card>
 

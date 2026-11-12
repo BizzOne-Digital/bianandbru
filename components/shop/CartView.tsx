@@ -1,5 +1,7 @@
 "use client";
 
+import { useLang } from "@/components/common/LangProvider";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
@@ -9,26 +11,27 @@ import { useCart } from "./CartProvider";
 
 export function OrderSummary({ children }: { children?: React.ReactNode }) {
   const { subtotal, savings, originalTotal, count } = useCart();
+  const { t } = useLang();
   return (
-    <aside className="h-fit rounded-[22px] bg-white p-6 shadow-soft" aria-label="Resumen del pedido">
-      <h2 className="font-serif text-2xl">Order Summary</h2>
+    <aside className="h-fit rounded-[22px] bg-white p-6 shadow-soft" aria-label="Order summary">
+      <h2 className="font-serif text-2xl">{t("cart.summary")}</h2>
       <dl className="mt-4 space-y-2 text-[15px]">
         <div className="flex justify-between">
-          <dt>Items ({count})</dt>
+          <dt>{t("cart.items", { n: count })}</dt>
           <dd>{formatPrice(originalTotal)}</dd>
         </div>
         {savings > 0 && (
           <div className="flex justify-between text-rose-dark">
-            <dt>Discount</dt>
+            <dt>{t("cart.discount")}</dt>
             <dd>-{formatPrice(savings)}</dd>
           </div>
         )}
         <div className="flex justify-between text-muted">
-          <dt>Shipping</dt>
-          <dd>Calculated at confirmation</dd>
+          <dt>{t("cart.shipping")}</dt>
+          <dd>{t("cart.shippingCalc")}</dd>
         </div>
         <div className="flex justify-between border-t border-navy/10 pt-3 text-lg font-bold text-navy">
-          <dt>Subtotal</dt>
+          <dt>{t("cart.subtotal")}</dt>
           <dd>{formatPrice(subtotal)}</dd>
         </div>
       </dl>
@@ -39,6 +42,7 @@ export function OrderSummary({ children }: { children?: React.ReactNode }) {
 
 export function CartView() {
   const { items, ready, setQty, remove } = useCart();
+  const { t } = useLang();
 
   if (!ready)
     return (
@@ -52,7 +56,7 @@ export function CartView() {
   if (!items.length)
     return (
       <div className="mt-10">
-        <EmptyState title="Your cart is empty" text="Discover keepsakes and essentials made to be treasured." actionLabel="Shop Now" actionHref="/shop" />
+        <EmptyState title={t("cart.emptyTitle")} text={t("cart.emptyText")} actionLabel={t("cart.shopNow")} actionHref="/shop" />
       </div>
     );
 
@@ -69,7 +73,7 @@ export function CartView() {
                 <Link href={`/shop/${i.slug}`} className="font-semibold text-navy hover:text-rose-dark">
                   {i.name}
                 </Link>
-                <button type="button" onClick={() => remove(i.productId)} aria-label={`Eliminar ${i.name}`} className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-muted hover:bg-blush-soft hover:text-rose-dark">
+                <button type="button" onClick={() => remove(i.productId)} aria-label={t("cart.remove", { name: i.name })} className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-muted hover:bg-blush-soft hover:text-rose-dark">
                   <Trash2 className="h-5 w-5" />
                 </button>
               </div>
@@ -78,12 +82,12 @@ export function CartView() {
                 {i.compareAtPrice && i.compareAtPrice > i.price && <s className="ml-2 text-muted">{formatPrice(i.compareAtPrice)}</s>}
               </p>
               <div className="mt-auto flex items-center justify-between pt-2">
-                <div className="flex items-center rounded-full border border-navy/15" role="group" aria-label={`Cantidad de ${i.name}`}>
-                  <button type="button" onClick={() => setQty(i.productId, i.quantity - 1)} aria-label="Disminuir" className="grid h-10 w-10 place-items-center rounded-full hover:bg-baby" disabled={i.quantity <= 1}>
+                <div className="flex items-center rounded-full border border-navy/15" role="group" aria-label={`Quantity of ${i.name}`}>
+                  <button type="button" onClick={() => setQty(i.productId, i.quantity - 1)} aria-label="Decrease" className="grid h-10 w-10 place-items-center rounded-full hover:bg-baby" disabled={i.quantity <= 1}>
                     <Minus className="h-4 w-4" />
                   </button>
                   <span className="w-8 text-center font-semibold">{i.quantity}</span>
-                  <button type="button" onClick={() => setQty(i.productId, i.quantity + 1)} aria-label="Aumentar" className="grid h-10 w-10 place-items-center rounded-full hover:bg-baby">
+                  <button type="button" onClick={() => setQty(i.productId, i.quantity + 1)} aria-label="Increase" className="grid h-10 w-10 place-items-center rounded-full hover:bg-baby">
                     <Plus className="h-4 w-4" />
                   </button>
                 </div>
@@ -95,10 +99,10 @@ export function CartView() {
       </ul>
       <OrderSummary>
         <Link href="/checkout" className="btn-pink mt-6 w-full">
-          Proceed to Checkout
+          {t("cart.checkout")}
         </Link>
         <Link href="/shop" className="mt-3 block text-center text-sm font-semibold text-navy hover:text-rose-dark">
-          Continue shopping
+          {t("cart.continue")}
         </Link>
       </OrderSummary>
     </div>

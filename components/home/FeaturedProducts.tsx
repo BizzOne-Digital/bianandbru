@@ -1,10 +1,12 @@
+import { getT } from "@/lib/lang";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Sparks } from "@/components/common/Icons";
 import { ProductCard } from "@/components/shop/ProductCard";
 import type { ProductDTO } from "@/lib/data";
 
-export function FeaturedProducts({ heading, viewAllLabel, products }: { heading: string; viewAllLabel: string; products: ProductDTO[] }) {
+export async function FeaturedProducts({ heading, viewAllLabel, products }: { heading: string; viewAllLabel: string; products: ProductDTO[] }) {
+  const t = await getT();
   return (
     <section aria-labelledby="featured-title" className="flex h-full flex-col">
       <div className="flex items-end justify-between gap-4">
@@ -16,7 +18,7 @@ export function FeaturedProducts({ heading, viewAllLabel, products }: { heading:
         </Link>
       </div>
       {products.length === 0 ? (
-        <p className="mt-5 rounded-[20px] bg-white p-8 text-center text-muted shadow-soft">New products are coming soon.</p>
+        <p className="mt-5 rounded-[20px] bg-white p-8 text-center text-muted shadow-soft">{t("home.comingSoon")}</p>
       ) : (
         <ul className="no-scrollbar mt-5 flex w-full flex-1 snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible">
           {products.map((p) => (

@@ -1,5 +1,7 @@
 "use client";
 
+import { useLang } from "@/components/common/LangProvider";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -10,6 +12,7 @@ type P = { _id: string; name: string; slug: string; price: number; thumbnail: st
 
 export function WishlistView() {
   const [items, setItems] = useState<P[] | null>(null);
+  const { t } = useLang();
   useEffect(() => {
     let ids: string[] = [];
     try {
@@ -26,7 +29,7 @@ export function WishlistView() {
   if (!items.length)
     return (
       <div className="mt-6">
-        <EmptyState title="Your wishlist is empty" text="Tap the heart on any product to save it here." actionLabel="Browse products" actionHref="/shop" />
+        <EmptyState title={t("account.wishEmpty")} text={t("account.wishEmptyText")} actionLabel={t("account.browse")} actionHref="/shop" />
       </div>
     );
   return (

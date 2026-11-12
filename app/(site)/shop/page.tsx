@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageHero } from "@/components/common/PageHero";
@@ -15,14 +16,15 @@ export const metadata: Metadata = {
 type SP = Promise<Record<string, string | undefined>>;
 
 async function ShopResults({ query }: { query: ShopQuery }) {
+  const t = await getT();
   const products = await getProducts(query);
-  if (products === null) return <EmptyState title="We could not load products" text="The store is temporarily unavailable. Please refresh in a moment." />;
+  if (products === null) return <EmptyState title={t("shop.errorTitle")} text={t("shop.errorText")} />;
   if (products.length === 0)
-    return <EmptyState tone="blue" title="No products match your filters" text="Try another search or clear the filters." actionLabel="View all products" actionHref="/shop" />;
+    return <EmptyState tone="blue" title={t("shop.emptyTitle")} text={t("shop.emptyText")} actionLabel={t("shop.viewAll")} actionHref="/shop" />;
   return (
     <>
       <p className="mb-4 text-sm text-muted" aria-live="polite">
-        {products.length} product{products.length === 1 ? "" : "s"}
+        {products.length === 1 ? t("shop.count1") : t("shop.count", { n: products.length })}
       </p>
       <ProductGrid products={products} />
     </>

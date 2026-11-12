@@ -10,7 +10,7 @@ const ICON_TONES = ["text-navy", "text-navy", "text-rose-dark", "text-navy"];
 export function StoryCards({ cards }: { cards: Card[] }) {
   if (!cards?.length) return null;
   return (
-    <section aria-label="Sobre nosotros" className="container-x py-8 lg:py-10">
+    <section aria-label="About" className="container-x py-8 lg:py-10">
       <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map((c, i) => (
           <li key={i} className={`flex flex-col rounded-[22px] border border-navy/5 bg-gradient-to-br p-6 shadow-soft transition hover:-translate-y-1 ${TONES[i % 4]}`}>

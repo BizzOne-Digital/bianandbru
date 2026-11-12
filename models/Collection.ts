@@ -4,6 +4,8 @@ const S = new Schema(
     name: { type: String, required: true, trim: true },
     slug: { type: String, required: true, unique: true },
     description: { type: String, default: "" },
+    nameEs: { type: String, default: "" },
+    descriptionEs: { type: String, default: "" },
     image: { type: String, default: "" },
     featured: { type: Boolean, default: false },
     displayOrder: { type: Number, default: 0 },

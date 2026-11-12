@@ -1,5 +1,6 @@
 import { Building2, Mail, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/common/Icons";
+import { LangSwitcher } from "@/components/common/LangProvider";
 import type { SiteSettingsData } from "@/lib/content-defaults";
 
 export function TopBar({ s }: { s: SiteSettingsData }) {
@@ -10,12 +11,12 @@ export function TopBar({ s }: { s: SiteSettingsData }) {
           <Building2 aria-hidden className="h-4 w-4 shrink-0" strokeWidth={1.6} />
           <span className="truncate">{s.announcement}</span>
         </p>
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <a href={`mailto:${s.email}`} className="hidden items-center gap-2 hover:text-blush md:flex">
             <Mail aria-hidden className="h-4 w-4" strokeWidth={1.6} />
             {s.email}
           </a>
-          <a href={`tel:${s.phone}`} className="flex items-center gap-2 hover:text-blush" aria-label={`Llamar ${s.phone}`}>
+          <a href={`tel:${s.phone}`} className="flex items-center gap-2 hover:text-blush" aria-label={`Call ${s.phone}`}>
             <Phone aria-hidden className="h-4 w-4" strokeWidth={1.6} />
             <span className="hidden sm:inline">{s.phone}</span>
           </a>
@@ -29,6 +30,7 @@ export function TopBar({ s }: { s: SiteSettingsData }) {
               <FacebookIcon className="h-[18px] w-[18px]" />
             </a>
           )}
+          <LangSwitcher />
         </div>
       </div>
     </div>

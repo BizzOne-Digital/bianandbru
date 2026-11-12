@@ -63,7 +63,7 @@ export function HeroSection({ d }: { d: HeroData }) {
 
       {/* Desktop/tablet image: right side, fades into the text area */}
       <div className="absolute inset-y-0 right-0 hidden w-[64%] md:block">
-        <Image src={hero} alt="Bebé feliz con accesorios suaves" fill priority sizes="64vw" className="animate-hero-zoom object-cover object-[60%_35%]" />
+        <Image src={hero} alt="Happy baby with soft accessories" fill priority sizes="64vw" className="animate-hero-zoom object-cover object-[60%_35%]" />
         <div className="absolute inset-0 bg-gradient-to-r from-warm via-warm/20 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-blush-soft/70 to-transparent" />
       </div>
@@ -97,7 +97,7 @@ export function HeroSection({ d }: { d: HeroData }) {
 
       {/* Mobile image: below text, face kept in frame */}
       <div className="relative mx-4 mb-8 aspect-[4/3] overflow-hidden rounded-[24px] shadow-card md:hidden">
-        <Image src={hero} alt="Bebé feliz con accesorios suaves" fill sizes="100vw" className="animate-hero-zoom object-cover object-[55%_30%]" />
+        <Image src={hero} alt="Happy baby with soft accessories" fill sizes="100vw" className="animate-hero-zoom object-cover object-[55%_30%]" />
         {d.badgeEnabled && <DiscountBadge d={d} className="absolute right-2 top-2 h-[110px] w-[110px] animate-badge-in [animation-delay:700ms]" />}
       </div>
     </section>

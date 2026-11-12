@@ -5,20 +5,23 @@ import { useEffect, useState, useTransition } from "react";
 import { Loader2, Search, SlidersHorizontal, X } from "lucide-react";
 import { useDebounced } from "@/components/layout/SearchPanel";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/components/common/LangProvider";
+import type { DictKey } from "@/lib/i18n";
 
 type Opt = { name: string; slug: string };
 
-export const SORTS = [
-  { value: "", label: "Recommended" },
-  { value: "newest", label: "Newest" },
-  { value: "featured", label: "Featured" },
-  { value: "discounted", label: "On sale" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
+export const SORTS: { value: string; label: DictKey }[] = [
+  { value: "", label: "shop.sort.recommended" },
+  { value: "newest", label: "shop.sort.newest" },
+  { value: "featured", label: "shop.sort.featured" },
+  { value: "discounted", label: "shop.sort.discounted" },
+  { value: "price-asc", label: "shop.sort.priceAsc" },
+  { value: "price-desc", label: "shop.sort.priceDesc" },
 ];
 
 export function ProductFilters({ collections, categories }: { collections: Opt[]; categories: Opt[] }) {
   const router = useRouter();
+  const { t } = useLang();
   const pathname = usePathname();
   const params = useSearchParams();
   const [pending, start] = useTransition();
@@ -46,7 +49,7 @@ export function ProductFilters({ collections, categories }: { collections: Opt[]
         <legend className="mb-2 text-sm font-semibold text-navy">{label}</legend>
         <div className="flex flex-wrap gap-2">
           <button type="button" onClick={() => update(k, "")} aria-pressed={!params.get(k)} className={chip(!params.get(k))}>
-            All
+            {t("shop.all")}
           </button>
           {opts.map((o) => (
             <button key={o.slug} type="button" onClick={() => update(k, o.slug)} aria-pressed={params.get(k) === o.slug} className={chip(params.get(k) === o.slug)}>
@@ -62,10 +65,10 @@ export function ProductFilters({ collections, categories }: { collections: Opt[]
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <label htmlFor="shop-q" className="sr-only">
-            Search products
+            {t("nav.search")}
           </label>
           <Search aria-hidden className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-navy/50" />
-          <input id="shop-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search products..." className="field rounded-full pl-12" />
+          <input id="shop-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("shop.searchPlaceholder")} className="field rounded-full pl-12" />
           {pending && <Loader2 aria-label="Loading" className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 animate-spin text-navy/50" />}
         </div>
         <div className="flex gap-2">
@@ -75,18 +78,18 @@ export function ProductFilters({ collections, categories }: { collections: Opt[]
           <select id="shop-sort" value={params.get("sort") ?? ""} onChange={(e) => update("sort", e.target.value)} className="field flex-1 rounded-full sm:w-56">
             {SORTS.map((s) => (
               <option key={s.value} value={s.value}>
-                {s.label}
+                {t(s.label)}
               </option>
             ))}
           </select>
           <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="shop-filters" className="btn-outline px-4 py-2.5 md:hidden">
-            <SlidersHorizontal aria-hidden className="h-4 w-4" /> Filters
+            <SlidersHorizontal aria-hidden className="h-4 w-4" /> {t("shop.filters")}
           </button>
         </div>
       </div>
       <div id="shop-filters" className={cn("space-y-4 rounded-[20px] bg-white p-4 shadow-soft md:block", open ? "block" : "hidden")}>
-        <Chips label="Collections" k="collection" opts={collections} />
-        <Chips label="Categories" k="category" opts={categories} />
+        <Chips label={t("shop.collections")} k="collection" opts={collections} />
+        <Chips label={t("shop.categories")} k="category" opts={categories} />
         {active && (
           <button
             type="button"
@@ -96,7 +99,7 @@ export function ProductFilters({ collections, categories }: { collections: Opt[]
             }}
             className="inline-flex items-center gap-1 text-sm font-semibold text-rose-dark hover:underline"
           >
-            <X aria-hidden className="h-4 w-4" /> Clear all filters
+            <X aria-hidden className="h-4 w-4" /> {t("shop.clear")}
           </button>
         )}
       </div>

@@ -5,6 +5,8 @@ export const taxonomyFields: AdminField[] = [
   { name: "name", label: "Name", type: "text", required: true },
   { name: "slug", label: "Slug", type: "slug", required: true, help: "Lowercase, dashes only. Leave empty to generate from name." },
   { name: "description", label: "Description", type: "textarea" },
+  { name: "nameEs", label: "Name — Spanish (optional)", type: "text" },
+  { name: "descriptionEs", label: "Description — Spanish (optional)", type: "textarea" },
   { name: "image", label: "Image", type: "image" },
   { name: "displayOrder", label: "Display order", type: "number" },
   { name: "published", label: "Published", type: "boolean" },

@@ -4,24 +4,26 @@ import { Logo } from "@/components/common/Logo";
 import { FacebookIcon, InstagramIcon } from "@/components/common/Icons";
 import { NewsletterForm } from "@/components/home/NewsletterForm";
 import type { SiteSettingsData } from "@/lib/content-defaults";
+import { makeT, type DictKey, type Lang } from "@/lib/i18n";
 
-const COL_A = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/team", label: "Our Team" },
+const COL_A: { href: string; label: DictKey }[] = [
+  { href: "/", label: "nav.home" },
+  { href: "/about", label: "nav.about" },
+  { href: "/team", label: "nav.team" },
 ];
-const COL_B = [
-  { href: "/services", label: "Services" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/faq", label: "FAQ" },
+const COL_B: { href: string; label: DictKey }[] = [
+  { href: "/services", label: "nav.services" },
+  { href: "/pricing", label: "nav.pricing" },
+  { href: "/faq", label: "nav.faq" },
 ];
-const COL_C = [
-  { href: "/shop", label: "Shop" },
-  { href: "/testimonials", label: "Testimonials" },
-  { href: "/booking", label: "Booking" },
+const COL_C: { href: string; label: DictKey }[] = [
+  { href: "/shop", label: "nav.shop" },
+  { href: "/testimonials", label: "nav.testimonials" },
+  { href: "/booking", label: "nav.booking" },
 ];
 
-export function Footer({ s, newsletter }: { s: SiteSettingsData; newsletter: { heading: string; text: string; buttonLabel: string } }) {
+export function Footer({ s, newsletter, lang }: { s: SiteSettingsData; newsletter: { heading: string; text: string; buttonLabel: string }; lang: Lang }) {
+  const t = makeT(lang);
   return (
     <footer className="bg-navy text-white">
       <div className="container-x grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.1fr_1.6fr_1fr_1.2fr] lg:gap-8">
@@ -30,15 +32,15 @@ export function Footer({ s, newsletter }: { s: SiteSettingsData; newsletter: { h
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/75">{s.footerText}</p>
         </div>
 
-        <nav aria-label="Enlaces rápidos" className="lg:border-r lg:border-white/15 lg:pr-8">
-          <h2 className="font-sans text-base font-semibold text-white">Quick Links</h2>
+        <nav aria-label={t("footer.quickLinks")} className="lg:border-r lg:border-white/15 lg:pr-8">
+          <h2 className="font-sans text-base font-semibold text-white">{t("footer.quickLinks")}</h2>
           <div className="mt-4 grid grid-cols-3 gap-x-6 gap-y-2.5 text-sm text-white/85">
             {[COL_A, COL_B, COL_C].map((col, i) => (
               <ul key={i} className="space-y-2.5">
                 {col.map((l) => (
                   <li key={l.href}>
                     <Link href={l.href} className="hover:text-blush">
-                      {l.label}
+                      {t(l.label)}
                     </Link>
                   </li>
                 ))}
@@ -48,7 +50,7 @@ export function Footer({ s, newsletter }: { s: SiteSettingsData; newsletter: { h
         </nav>
 
         <div className="lg:border-r lg:border-white/15 lg:pr-8">
-          <h2 className="font-sans text-base font-semibold text-white">Contact Us</h2>
+          <h2 className="font-sans text-base font-semibold text-white">{t("footer.contact")}</h2>
           <ul className="mt-4 space-y-3 text-sm text-white/85">
             <li>
               <a href={`mailto:${s.footerEmail}`} className="flex items-center gap-2.5 break-all hover:text-blush">
@@ -85,14 +87,14 @@ export function Footer({ s, newsletter }: { s: SiteSettingsData; newsletter: { h
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/65 sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {s.companyName} ({s.businessName}). All rights reserved.
+            © {new Date().getFullYear()} {s.companyName} ({s.businessName}). {t("footer.rights")}
           </p>
           <p className="flex gap-4">
             <Link href="/privacy" className="hover:text-white">
-              Privacy Policy
+              {t("footer.privacy")}
             </Link>
             <Link href="/terms" className="hover:text-white">
-              Terms & Conditions
+              {t("footer.terms")}
             </Link>
           </p>
         </div>

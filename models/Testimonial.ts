@@ -7,6 +7,8 @@ const S = new Schema(
     rating: { type: Number, min: 1, max: 5, default: 5 },
     review: { type: String, required: true },
     location: { type: String, default: "" },
+    reviewEs: { type: String, default: "" },
+    locationEs: { type: String, default: "" },
     published: { type: Boolean, default: true },
     featured: { type: Boolean, default: false },
     displayOrder: { type: Number, default: 0 },

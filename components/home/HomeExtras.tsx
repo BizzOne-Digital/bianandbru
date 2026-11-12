@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -8,7 +9,8 @@ import { getSafeImageUrl } from "@/lib/utils";
 
 type Pt = { icon: string; title: string; text: string };
 
-export function BestSellers({ d, products }: { d: { eyebrow: string; heading: string; text: string }; products: ProductDTO[] }) {
+export async function BestSellers({ d, products }: { d: { eyebrow: string; heading: string; text: string }; products: ProductDTO[] }) {
+  const t = await getT();
   if (!products.length) return null;
   return (
     <section aria-labelledby="best-title" className="bg-gradient-to-b from-white to-baby/40">
@@ -22,7 +24,7 @@ export function BestSellers({ d, products }: { d: { eyebrow: string; heading: st
             {d.text && <p className="mt-2 max-w-xl text-ink/75">{d.text}</p>}
           </div>
           <Link href="/shop" className="btn-outline px-5 py-2.5 text-sm">
-            Shop All <ArrowRight aria-hidden className="h-4 w-4" />
+            {t("home.shopAll")} <ArrowRight aria-hidden className="h-4 w-4" />
           </Link>
         </div>
         <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
@@ -37,19 +39,20 @@ export function BestSellers({ d, products }: { d: { eyebrow: string; heading: st
   );
 }
 
-export function WhySection({ d }: { d: { eyebrow: string; heading: string; text: string; image: string; points: Pt[]; ctaLabel: string; ctaHref: string } }) {
+export async function WhySection({ d }: { d: { eyebrow: string; heading: string; text: string; image: string; points: Pt[]; ctaLabel: string; ctaHref: string } }) {
+  const t = await getT();
   return (
     <section aria-labelledby="why-title" className="container-x grid items-center gap-10 py-16 lg:grid-cols-2 lg:gap-16">
       <div className="relative">
         <div className="absolute -left-4 -top-4 h-full w-full rounded-[30px] bg-blush-soft" aria-hidden />
         <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] shadow-card">
-          <Image src={getSafeImageUrl(d.image)} alt="Familia feliz con su bebé" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover transition duration-700 hover:scale-[1.03]" />
+          <Image src={getSafeImageUrl(d.image)} alt="Happy family with their baby" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover transition duration-700 hover:scale-[1.03]" />
         </div>
         <div className="absolute -bottom-6 right-4 flex items-center gap-3 rounded-2xl bg-white px-5 py-4 shadow-card sm:right-8">
           <HeartLine className="h-8 w-9" />
           <div>
-            <p className="font-serif text-xl text-navy">Hecho con amor</p>
-            <p className="text-xs text-muted">para cada familia</p>
+            <p className="font-serif text-xl text-navy">{t("home.madeWithLove")}</p>
+            <p className="text-xs text-muted">{t("home.forEveryFamily")}</p>
           </div>
         </div>
       </div>
@@ -109,7 +112,7 @@ export function GiftBanner({
           </div>
         </div>
         <div className="relative order-1 aspect-[4/3] md:order-2 md:aspect-auto md:min-h-[420px]">
-          <Image src={getSafeImageUrl(d.image)} alt="Caja de regalo rosa con osito y accesorios para bebé" fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
+          <Image src={getSafeImageUrl(d.image)} alt="Pink gift box with teddy bear and baby accessories" fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
         </div>
       </div>
     </section>

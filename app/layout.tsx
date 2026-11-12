@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { getSettings } from "@/lib/data";
+import { getLang } from "@/lib/lang";
 import { SITE_URL, getSafeImageUrl } from "@/lib/utils";
 import "./globals.css";
 
@@ -33,9 +34,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const lang = await getLang();
   return (
-    <html lang="es" className={`${playfair.variable} ${dmSans.variable}`}>
+    <html lang={lang} className={`${playfair.variable} ${dmSans.variable}`}>
       <body>
         {children}
         <Toaster position="top-right" richColors closeButton />

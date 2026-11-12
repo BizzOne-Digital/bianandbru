@@ -49,12 +49,19 @@ export const productSchema = z.object({
   thumbnail: imageUrl.default(""),
   seoTitle: z.string().trim().max(160).default(""),
   seoDescription: z.string().trim().max(320).default(""),
+  nameEs: z.string().trim().max(160).default(""),
+  shortDescriptionEs: z.string().trim().max(400).default(""),
+  descriptionEs: z.string().trim().max(10000).default(""),
+  seoTitleEs: z.string().trim().max(160).default(""),
+  seoDescriptionEs: z.string().trim().max(320).default(""),
 });
 
 export const taxonomySchema = z.object({
   name: z.string().trim().min(2).max(120),
   slug,
   description: z.string().trim().max(1000).default(""),
+  nameEs: z.string().trim().max(120).default(""),
+  descriptionEs: z.string().trim().max(1000).default(""),
   image: imageUrl.default(""),
   featured: z.boolean().default(false),
   displayOrder: z.coerce.number().int().min(0).max(9999).default(0),
@@ -65,6 +72,8 @@ export const teamSchema = z.object({
   name: z.string().trim().min(2).max(120),
   role: z.string().trim().max(120).default(""),
   bio: z.string().trim().max(2000).default(""),
+  roleEs: z.string().trim().max(120).default(""),
+  bioEs: z.string().trim().max(2000).default(""),
   photo: imageUrl.default(""),
   displayOrder: z.coerce.number().int().min(0).max(9999).default(0),
   published: z.boolean().default(true),
@@ -76,6 +85,8 @@ export const testimonialSchema = z.object({
   rating: z.coerce.number().int().min(1).max(5),
   review: z.string().trim().min(5).max(2000),
   location: z.string().trim().max(120).default(""),
+  reviewEs: z.string().trim().max(2000).default(""),
+  locationEs: z.string().trim().max(120).default(""),
   published: z.boolean().default(true),
   featured: z.boolean().default(false),
   displayOrder: z.coerce.number().int().min(0).max(9999).default(0),
@@ -85,6 +96,9 @@ export const faqSchema = z.object({
   question: z.string().trim().min(5).max(300),
   answer: z.string().trim().min(2).max(4000),
   category: z.string().trim().max(60).default("General"),
+  questionEs: z.string().trim().max(300).default(""),
+  answerEs: z.string().trim().max(4000).default(""),
+  categoryEs: z.string().trim().max(60).default(""),
   displayOrder: z.coerce.number().int().min(0).max(9999).default(0),
   published: z.boolean().default(true),
 });
@@ -94,7 +108,11 @@ export const offerSchema = z.object({
   description: z.string().trim().max(1000).default(""),
   discountLabel: z.string().trim().max(60).default(""),
   image: imageUrl.default(""),
-  ctaLabel: z.string().trim().max(60).default("Ver Ofertas"),
+  ctaLabel: z.string().trim().max(60).default("View Offers"),
+  titleEs: z.string().trim().max(160).default(""),
+  descriptionEs: z.string().trim().max(1000).default(""),
+  discountLabelEs: z.string().trim().max(60).default(""),
+  ctaLabelEs: z.string().trim().max(60).default(""),
   ctaHref: z
     .string()
     .trim()

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Menu, Search, ShoppingCart, User } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { useCart } from "@/components/shop/CartProvider";
+import { useLang } from "@/components/common/LangProvider";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "./nav";
 import { MobileMenu } from "./MobileMenu";
@@ -14,6 +15,7 @@ import { SearchPanel } from "./SearchPanel";
 export function Header({ logo, name, company }: { logo?: string; name: string; company: string }) {
   const pathname = usePathname();
   const { count, bump, ready } = useCart();
+  const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -43,7 +45,7 @@ export function Header({ logo, name, company }: { logo?: string; name: string; c
         <div className={cn("container-x flex items-center justify-between gap-4 transition-all", scrolled ? "h-[68px]" : "h-[72px] lg:h-[84px]")}>
           <Logo logoUrl={logo} name={name} company={company} />
 
-          <nav aria-label="Principal" className="hidden xl:block">
+          <nav aria-label="Main" className="hidden xl:block">
             <ul className="flex items-center gap-1">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
@@ -55,7 +57,7 @@ export function Header({ logo, name, company }: { logo?: string; name: string; c
                       isActive(l.href) && "bg-blush text-navy"
                     )}
                   >
-                    {l.label}
+                    {t(l.key)}
                   </Link>
                 </li>
               ))}
@@ -66,15 +68,15 @@ export function Header({ logo, name, company }: { logo?: string; name: string; c
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              aria-label="Buscar productos"
+              aria-label={t("nav.search")}
               className="grid h-11 w-11 place-items-center rounded-full text-navy hover:bg-baby"
             >
               <Search className="h-6 w-6" strokeWidth={1.7} />
             </button>
-            <Link href="/account" aria-label="Mi cuenta" className="hidden h-11 w-11 place-items-center rounded-full text-navy hover:bg-baby sm:grid">
+            <Link href="/account" aria-label={t("nav.account")} className="hidden h-11 w-11 place-items-center rounded-full text-navy hover:bg-baby sm:grid">
               <User className="h-6 w-6" strokeWidth={1.7} />
             </Link>
-            <Link href="/cart" aria-label={`Carrito, ${count} artículos`} className="relative grid h-11 w-11 place-items-center rounded-full text-navy hover:bg-baby">
+            <Link href="/cart" aria-label={`${t("nav.cart")} (${count})`} className="relative grid h-11 w-11 place-items-center rounded-full text-navy hover:bg-baby">
               <ShoppingCart className="h-6 w-6" strokeWidth={1.7} />
               <span
                 key={bump}
@@ -89,7 +91,7 @@ export function Header({ logo, name, company }: { logo?: string; name: string; c
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              aria-label="Abrir menú"
+              aria-label={t("nav.openMenu")}
               aria-expanded={menuOpen}
               className="grid h-11 w-11 place-items-center rounded-full text-navy hover:bg-baby xl:hidden"
             >

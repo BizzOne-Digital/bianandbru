@@ -12,6 +12,9 @@ export default function FaqAdmin() {
         { name: "question", label: "Question", type: "text", required: true },
         { name: "category", label: "Category", type: "text", help: "e.g. Orders, Shipping, Products" },
         { name: "answer", label: "Answer", type: "textarea", required: true },
+        { name: "questionEs", label: "Question — Spanish (optional)", type: "text" },
+        { name: "categoryEs", label: "Category — Spanish (optional)", type: "text" },
+        { name: "answerEs", label: "Answer — Spanish (optional)", type: "textarea" },
         { name: "displayOrder", label: "Display order", type: "number" },
         { name: "published", label: "Published", type: "boolean" },
       ]}

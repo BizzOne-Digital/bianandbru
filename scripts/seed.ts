@@ -18,6 +18,7 @@ import { Testimonial } from "../models/Testimonial";
 import { TeamMember } from "../models/TeamMember";
 import { FAQ } from "../models/FAQ";
 import { SpecialOffer } from "../models/SpecialOffer";
+import { applyTranslations } from "./translate-content";
 
 async function main() {
   const uri = process.env.MONGODB_URI;
@@ -213,6 +214,9 @@ async function main() {
       { title: "Keepsakes on sale", description: "Up to 20% off journals, albums and frames.", discountLabel: "Hasta -20%", image: IMG.giftPink, ctaLabel: "Ver Ofertas", ctaHref: "/shop?sort=discounted", displayOrder: 1 },
     ]);
   }
+
+  // English text + Spanish translations for the starter records.
+  await applyTranslations(false);
 
   console.log("Seed complete.");
   await mongoose.disconnect();

@@ -47,7 +47,7 @@ export function ProductCard({
           <span className="text-xl font-bold text-navy">{formatPrice(product.price, product.currency)}</span>
           {off > 0 && product.compareAtPrice && (
             <span className="text-sm text-muted line-through">
-              <span className="sr-only">Antes </span>
+              <span className="sr-only">Was </span>
               {formatPrice(product.compareAtPrice, product.currency)}
             </span>
           )}

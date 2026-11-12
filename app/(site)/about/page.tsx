@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import { getSafeImageUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Bienvenido a BIAN&BRU — nuestra historia, misión y promesa para las familias.",
+  description: "Welcome to BIAN&BRU — our story, mission and promise to families.",
   alternates: { canonical: "/about" },
 };
 
@@ -36,12 +37,13 @@ type About = {
 };
 
 export default async function AboutPage() {
+  const t = await getT();
   const { data: d } = await getSection<About>("about");
   return (
     <>
-      <PageHero eyebrow="About Us" title={d.heroTitle} text={d.heroText} image={d.heroImage} />
+      <PageHero eyebrow={t("nav.about")} title={d.heroTitle} text={d.heroText} image={d.heroImage} />
 
-      <section id="historia" className="container-x grid scroll-mt-28 items-center gap-10 py-14 md:grid-cols-2">
+      <section id="story" className="container-x grid scroll-mt-28 items-center gap-10 py-14 md:grid-cols-2">
         <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] shadow-card">
           <Image src={getSafeImageUrl(d.storyImage)} alt="" fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
         </div>
@@ -51,7 +53,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section id="mision" className="scroll-mt-28 bg-baby/60">
+      <section id="mission" className="scroll-mt-28 bg-baby/60">
         <div className="container-x py-14 text-center">
           <BrandIcon name="target" className="mx-auto h-10 w-10 text-rose-dark" />
           <h2 className="section-title mt-3">{d.missionTitle}</h2>
@@ -59,7 +61,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section id="promesa" className="container-x grid scroll-mt-28 items-center gap-10 py-14 md:grid-cols-2">
+      <section id="promise" className="container-x grid scroll-mt-28 items-center gap-10 py-14 md:grid-cols-2">
         <div className="md:order-2 relative aspect-[4/3] overflow-hidden rounded-[24px] shadow-card">
           <Image src={getSafeImageUrl(d.promiseImage)} alt="" fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
         </div>
@@ -87,7 +89,7 @@ export default async function AboutPage() {
       )}
 
       {d.galleryImages?.length > 0 && (
-        <section className="container-x py-14" aria-label="Galería">
+        <section className="container-x py-14" aria-label="Gallery">
           <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {d.galleryImages.map((g, i) => (
               <li key={i} className={`relative aspect-square overflow-hidden rounded-[20px] ${i === 2 ? "col-span-2 aspect-[2/1] md:col-span-1 md:aspect-square" : ""}`}>

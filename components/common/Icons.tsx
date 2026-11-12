@@ -76,7 +76,7 @@ export function FacebookIcon({ className }: { className?: string }) {
 
 export function StarRating({ rating, className }: { rating: number; className?: string }) {
   return (
-    <div className={cn("flex gap-0.5", className)} role="img" aria-label={`${rating} de 5 estrellas`}>
+    <div className={cn("flex gap-0.5", className)} role="img" aria-label={`${rating} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <Star key={i} aria-hidden className={cn("h-4 w-4", i <= rating ? "fill-amber-400 text-amber-400" : "text-navy/20")} />
       ))}

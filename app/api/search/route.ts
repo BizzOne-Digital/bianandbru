@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { getProducts } from "@/lib/data";
+import { getLang } from "@/lib/lang";
 import { serialize } from "@/lib/utils";
 import { Product } from "@/models/Product";
 
@@ -13,8 +14,13 @@ export async function GET(req: Request) {
     const list = ids.split(",").filter((id) => /^[a-f0-9]{24}$/.test(id)).slice(0, 50);
     try {
       await connectDB();
-      const docs = await Product.find({ _id: { $in: list }, published: true, status: "active" }).select("name slug price thumbnail images").lean();
-      return NextResponse.json({ products: serialize(docs) });
+      const lang = await getLang();
+      const docs = await Product.find({ _id: { $in: list }, published: true, status: "active" }).select("name nameEs slug price thumbnail images").lean();
+      const products = serialize<{ name: string; nameEs?: string }[]>(docs).map(({ nameEs, ...p }) => ({
+        ...p,
+        name: lang === "es" && nameEs ? nameEs : p.name,
+      }));
+      return NextResponse.json({ products });
     } catch {
       return NextResponse.json({ products: [] }, { status: 500 });
     }

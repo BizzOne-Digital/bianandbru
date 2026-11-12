@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/common/PageHero";
@@ -8,13 +9,14 @@ import { getSafeImageUrl } from "@/lib/utils";
 export const metadata: Metadata = { title: "Our Team", description: "Meet the BIAN&BRU team.", alternates: { canonical: "/team" } };
 
 export default async function TeamPage() {
+  const t = await getT();
   const [{ data }, team] = await Promise.all([getSection<{ teamHeading: string; teamIntro: string }>("pages.misc"), getTeam()]);
   return (
     <>
       <PageHero title={data.teamHeading} text={data.teamIntro} />
       <section className="container-x py-14">
         {team.length === 0 ? (
-          <EmptyState title="Our team page is being prepared" text="Please check back soon." />
+          <EmptyState title={t("team.emptyTitle")} text={t("team.emptyText")} />
         ) : (
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {team.map((m, i) => (

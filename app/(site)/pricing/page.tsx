@@ -1,3 +1,4 @@
+import { getT } from "@/lib/lang";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PricingPage() {
+  const t = await getT();
   const [{ data: d }, hero, products, collections, offers] = await Promise.all([
     getSection<{ heading: string; intro: string; promoTitle: string; promoText: string; note: string }>("pricing"),
     getSection<{ badgeTitle: string; badgeSubtitle: string; badgeValue: string; badgeSuffix: string }>("home.hero"),
@@ -28,7 +30,7 @@ export default async function PricingPage() {
     .map((c) => ({ c, items: (products || []).filter((p) => p.collectionRef?._id === c._id) }))
     .filter((g) => g.items.length);
   const other = (products || []).filter((p) => !p.collectionRef || !collections.some((c) => c._id === p.collectionRef?._id));
-  if (other.length) byCollection.push({ c: { _id: "other", name: "More Products", slug: "", description: "", image: "", displayOrder: 999, published: true }, items: other });
+  if (other.length) byCollection.push({ c: { _id: "other", name: t("pricing.more"), slug: "", description: "", image: "", displayOrder: 999, published: true }, items: other });
 
   return (
     <>
@@ -40,7 +42,7 @@ export default async function PricingPage() {
             <h2 className="font-serif text-3xl">{d.promoTitle}</h2>
             <p className="mt-2 text-lg text-ink/80">{d.promoText}</p>
             <Link href="/shop?sort=discounted" className="btn-navy mt-5">
-              Ver Ofertas <ArrowRight aria-hidden className="h-4 w-4" />
+              {t("pricing.viewOffers")} <ArrowRight aria-hidden className="h-4 w-4" />
             </Link>
           </div>
           <DiscountBadge d={hero.data} className="relative mx-auto h-44 w-44" />
@@ -71,9 +73,9 @@ export default async function PricingPage() {
 
       <section className="container-x pb-14">
         {products === null ? (
-          <EmptyState title="Prices are temporarily unavailable" text="We could not load products right now. Please try again shortly." />
+          <EmptyState title={t("pricing.unavailable")} text={t("pricing.unavailableText")} />
         ) : byCollection.length === 0 ? (
-          <EmptyState title="No products published yet" actionLabel="Visit the shop" actionHref="/shop" />
+          <EmptyState title={t("pricing.noProducts")} actionLabel={t("pricing.visitShop")} actionHref="/shop" />
         ) : (
           <div className="space-y-10">
             {byCollection.map(({ c, items }) => (
@@ -81,12 +83,12 @@ export default async function PricingPage() {
                 <SectionHeading title={c.name} />
                 <div className="mt-4 overflow-hidden rounded-[22px] border border-navy/10 bg-white shadow-soft">
                   <table className="w-full text-left text-[15px]">
-                    <caption className="sr-only">Precios de {c.name}</caption>
+                    <caption className="sr-only">{c.name}</caption>
                     <thead className="bg-baby/60 text-sm text-navy">
                       <tr>
-                        <th scope="col" className="px-4 py-3 font-semibold">Product</th>
-                        <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">Category</th>
-                        <th scope="col" className="px-4 py-3 text-right font-semibold">Price</th>
+                        <th scope="col" className="px-4 py-3 font-semibold">{t("pricing.product")}</th>
+                        <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">{t("pricing.category")}</th>
+                        <th scope="col" className="px-4 py-3 text-right font-semibold">{t("pricing.price")}</th>
                       </tr>
                     </thead>
                     <tbody>
