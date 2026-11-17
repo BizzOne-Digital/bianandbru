@@ -79,8 +79,7 @@ const PRODUCTS: P[] = [
     shortEs: "Acordeón colorido que ayuda a la motricidad. Color aleatorio.",
     desc: "Make playtime fun with this adorable cartoon-style hand accordion toy! Available in candy green, candy pink and light blue, this colorful toy entertains children while helping develop important motor skills.\n\nMade from durable, lightweight ABS plastic, it helps improve hand-eye coordination, grip strength and fine motor skills through interactive play. A wonderful gift for birthdays and holidays.\n\nColors: Candy Green, Candy Pink, Light Blue (random color shipped).\nMaterial: ABS plastic.",
     descEs: "¡Haz el juego más divertido con este tierno acordeón de mano estilo caricatura! Disponible en verde, rosa y azul claro.\n\nHecho de plástico ABS resistente y liviano, ayuda a mejorar la coordinación, la fuerza de agarre y la motricidad fina. Un regalo ideal para cumpleaños y fiestas.\n\nColores: verde, rosa, azul claro (se envía color aleatorio).\nMaterial: plástico ABS.",
-    // Price not provided by the client yet — kept unpublished until confirmed.
-    price: 0, published: false, keywords: ["accordion", "toy", "musical", "acordeón"],
+    price: 13, compareAt: 17, keywords: ["accordion", "toy", "musical", "acordeón"],
   },
   {
     slug: "keepsake-box-set", images: 4, category: "baby-journals", collection: "recuerdos-y-recuerdos",
@@ -128,13 +127,22 @@ const PRODUCTS: P[] = [
     price: 15.9, keywords: ["blanket", "safari", "plush", "manta"],
   },
   {
-    slug: "rocking-support-cushion", images: 8, category: "loungers-comfort", collection: "baby-essentials",
+    slug: "rocking-support-cushion", images: 4, category: "loungers-comfort", collection: "baby-essentials",
     name: "Bear Plush Rocking Support Cushion with Remote", nameEs: "Cojín Osito con Movimiento y Control Remoto",
-    short: "Gentle rhythmic patting motion with 3 speeds and remote control.",
-    shortEs: "Movimiento rítmico suave con 3 velocidades y control remoto.",
+    short: "Bear nest with soothing patting hands, 3 speeds and remote control.",
+    shortEs: "Nido de osito con manitas que dan palmaditas, 3 velocidades y control remoto.",
     desc: "Enjoy soothing comfort with this soft bear plush support cushion, designed to provide gentle, rhythmic movement.\n\nKey features:\n• 3 adjustable speeds\n• Remote control\n• Gentle rhythmic patting motion\n• Soft dotted plush material\n• Removable head support and toys included\n\nSafety note: use only while the baby is awake and under direct adult supervision. Not suitable for infant sleep.",
     descEs: "Disfruta de un confort relajante con este suave cojín de osito que ofrece un movimiento rítmico y delicado.\n\nCaracterísticas:\n• 3 velocidades ajustables\n• Control remoto\n• Palmaditas rítmicas suaves\n• Felpa suave con puntitos\n• Incluye soporte de cabeza y juguetes\n\nNota de seguridad: úsese solo con el bebé despierto y bajo supervisión directa de un adulto. No apto para dormir.",
     price: 129, compareAt: 159, featured: true, keywords: ["bear", "cushion", "rocking", "remote", "osito"],
+  },
+  {
+    slug: "bear-baby-nest", images: 4, category: "loungers-comfort", collection: "baby-essentials",
+    name: "Little Brown Bear Baby Nest – Double-Sided", nameEs: "Nido para Bebé Osito Café – Doble Cara",
+    short: "Soft dotted plush baby nest with a cozy bear design and paw strap.",
+    shortEs: "Nido de felpa suave con diseño de osito y banda de patita.",
+    desc: "Give your little one a snug, cozy space with this adorable Little Brown Bear baby nest. Made of soft dotted plush, it features a cute embroidered bear face, plush ears and a gentle paw-print strap.\n\nKey features:\n• Soft dotted plush, gentle on baby's skin\n• Cute bear design with embroidered face\n• Double-sided use\n• Carry handles for easy moving around the home\n• A lovely baby shower gift\n\nSafety note: for awake, supervised use only. Not intended for unsupervised infant sleep. Always place babies to sleep on their back in a crib or bassinet.",
+    descEs: "Brinda a tu pequeño un espacio suave y acogedor con este tierno nido de osito café. Hecho de felpa suave con puntitos, tiene carita de osito bordada, orejitas de peluche y una banda con huellita.\n\nCaracterísticas:\n• Felpa suave, delicada con la piel del bebé\n• Diseño de osito con carita bordada\n• Uso de doble cara\n• Asas para moverlo fácilmente por la casa\n• Un lindo regalo para baby showers\n\nNota de seguridad: solo para uso con el bebé despierto y bajo supervisión. No apto para el sueño sin supervisión. Acuesta siempre al bebé boca arriba en su cuna.",
+    price: 49, compareAt: 54, featured: true, keywords: ["baby nest", "bear", "lounger", "nido", "osito"],
   },
   {
     slug: "giraffe-patting-pillow", images: 7, category: "plush-toys", collection: "baby-essentials",
